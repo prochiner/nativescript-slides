@@ -33,7 +33,7 @@ export declare class SlideContainer extends AbsoluteLayout {
     hasPrevious: boolean;
     loop: boolean;
     disablePan: boolean;
-    pageWidth: number;
+    pageWidth: any;
     angular: boolean;
     currentIndex: number;
     slideWidth: string;
