@@ -125,6 +125,9 @@ export class SlideContainer extends AbsoluteLayout {
 	}
 
 	get slideWidth(): string {
+		if (!this.slideWidth) {
+			return Platform.screen.mainScreen.widthDIPs;
+		}
 		return this._slideWidth;
 	}
 	set slideWidth(width: string) {
@@ -251,6 +254,13 @@ export class SlideContainer extends AbsoluteLayout {
 		this.showRightSlide(this.currentPanel).then(() => {
 			this.setupPanel(this.currentPanel.right);
 			this.triggerChangeEventRightToLeft();
+			if (!this.hasNext) {
+				// Notify finsihed
+				this.notify({
+					eventName: SlideContainer.finishedEvent,
+					object: this
+				});
+			}
 		});
 	}
 	public previousSlide(): void {
@@ -601,17 +611,17 @@ export class SlideContainer extends AbsoluteLayout {
 	}
 
 	setActivePageIndicator(index: number) {
-		let indicatorsToDeactivate = (<any>this._footer).getElementsByClassName(SLIDE_INDICATOR_ACTIVE);
+		let cntSlides = (<any>this._footer).getChildrenCount();
+		var activeIndicator;
 
-		indicatorsToDeactivate.forEach(activeIndicator => {
-			activeIndicator.classList.remove(SLIDE_INDICATOR_ACTIVE);
-			activeIndicator.classList.add(SLIDE_INDICATOR_INACTIVE);
-		});
+		for(var i = 0;i<cntSlides; i++){
+			activeIndicator = this._footer.getChildAt(i);
+			activeIndicator.className = SLIDE_INDICATOR_INACTIVE;
+		};
 
-		let activeIndicator = (<any>this._footer).getElementsByClassName(SLIDE_INDICATOR_INACTIVE)[index];
+		activeIndicator = (<any>this._footer).getChildAt(index);
 		if (activeIndicator) {
-			activeIndicator.classList.remove(SLIDE_INDICATOR_INACTIVE);
-			activeIndicator.classList.add(SLIDE_INDICATOR_ACTIVE);
+			activeIndicator.className = SLIDE_INDICATOR_ACTIVE;
 		}
 
 	}
