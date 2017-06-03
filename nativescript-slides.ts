@@ -617,7 +617,11 @@ export class SlideContainer extends AbsoluteLayout {
 		for(var i = 0;i<cntSlides; i++){
 			activeIndicator = this._footer.getChildAt(i);
 			activeIndicator.className = SLIDE_INDICATOR_INACTIVE;
+<<<<<<< HEAD
 		}
+=======
+		};
+>>>>>>> 0ba299d0aadb33afb37a21839572472173888346
 
 		activeIndicator = (<any>this._footer).getChildAt(index);
 		if (activeIndicator) {
